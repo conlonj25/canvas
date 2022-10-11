@@ -3,10 +3,31 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 
   class Box extends React.Component{
+
+  constructor(props){
+    super(props);
+
+    this.state = {
+      history: [],
+    };
+  }
+  
     render(){
         return(
             <div class={this.props.title}>
                 {this.props.title}
+                <button
+                  onClick={
+                    () => {
+                      this.state.history.push("Mango");
+                      console.log(this.state.history);
+                    }
+                  }
+                >
+                  +
+                </button>
+                <ul>
+                </ul>
             </div>
         )
     }
