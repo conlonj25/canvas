@@ -1,4 +1,4 @@
-import { Card } from '@/components/ui/card'
+import { Card, CardHeader, CardTitle } from '@/components/ui/card'
 import { listTitles } from './content'
 import { Canvas } from './types'
 
@@ -11,7 +11,9 @@ function List({ canvas, canvasKey }: ListProps) {
 
 	return (
 		<Card className='p-2 flex-1'>
-			<h1 className='text-center font-semibold'>{listTitles[canvasKey]}</h1>
+			<CardHeader>
+				<CardTitle className='text-center'>{listTitles[canvasKey]}</CardTitle>
+			</CardHeader>
 			<ul className=' list-inside list-disc'>
 				{canvas[canvasKey].map((el, i) => <li key={`${canvasKey}-${i}`}>{el}</li>)}
 			</ul>
