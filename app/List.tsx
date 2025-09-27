@@ -1,9 +1,11 @@
 import { Card, CardHeader, CardTitle } from '@/components/ui/card'
-import { listTitles } from './content'
+import { listTitles, newListItemDefaultValue } from './content'
 import { Canvas } from './types'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Dispatch, SetStateAction } from 'react'
+import { Button } from '@/components/ui/button'
+import { PlusIcon } from "lucide-react"
 
 type ListProps = {
 	canvas: Canvas
@@ -16,6 +18,13 @@ function List({ canvas, setCanvas, canvasKey }: ListProps) {
 	const updateListItem = (i: number, newValue: string) => {
 		const newList = [...canvas[canvasKey]];
 		newList[i] = newValue;
+
+		setCanvas({ ...canvas, [canvasKey]: newList });
+	};
+
+	const createListItem = () => {
+		const newList = [...canvas[canvasKey]];
+		newList.push(newListItemDefaultValue);
 
 		setCanvas({ ...canvas, [canvasKey]: newList });
 	};
@@ -42,6 +51,11 @@ function List({ canvas, setCanvas, canvasKey }: ListProps) {
 							<Input type='text' value={el} onChange={(e) => updateListItem(i, e.target.value)} />
 						</li>
 					))}
+					<li className='flex justify-end'>
+						<Button onClick={createListItem}>
+							<PlusIcon />
+						</Button>
+					</li>
 				</ul>
 			</DialogContent>
 		</Dialog>

@@ -9,3 +9,5 @@ export const listTitles = {
     costStructure: 'Cost Structure',
     revenueStreams: 'Revenue Streams',
   };
+
+export const newListItemDefaultValue = '...';
