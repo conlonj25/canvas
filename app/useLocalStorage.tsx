@@ -20,14 +20,9 @@ export const useLocalStorage = (): UseLocalStorageReturnType => {
 		}
 	}, []);
 
-	const setCanvasStateAndLocalStorage = (updater: Canvas | ((prev: Canvas) => Canvas)) => {
-		setCanvas(prev => {
-			const newCanvas = typeof updater === 'function' ? updater(prev) : updater;
-			localStorage.setItem(localStorageCanvasKey, JSON.stringify(newCanvas));
-			return newCanvas;
-		});
-		localStorage.setItem(localStorageCanvasKey, JSON.stringify(canvas))
-	};
+	useEffect(() => {
+		localStorage.setItem(localStorageCanvasKey, JSON.stringify(canvas));
+	}, [canvas]);
 
-	return [canvas, setCanvasStateAndLocalStorage];
+	return [canvas, setCanvas];
 }

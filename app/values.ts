@@ -12,7 +12,6 @@ export const defaultInitialCanvas = {
 	revenueStreams: ['Visa', 'Mastercard', 'PayPal', 'Stripe'],
 }
 
-
 export const emptyInitialCanvas = {
 	keyPartners: [],
 	keyActivities: [],

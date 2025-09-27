@@ -23,6 +23,7 @@ function List({ canvas, setCanvas, canvasKey }: ListProps) {
 	};
 
 	const updateListItem = (i: number, newValue: string) => {
+		console.log('updateListItem', newValue);
 		const newList = [...canvas[canvasKey]];
 		newList[i] = newValue;
 
