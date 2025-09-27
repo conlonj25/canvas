@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Input } from '@/components/ui/input'
 import { Dispatch, SetStateAction } from 'react'
 import { Button } from '@/components/ui/button'
-import { PlusIcon } from "lucide-react"
+import { PlusIcon, TrashIcon } from "lucide-react"
 
 type ListProps = {
 	canvas: Canvas
@@ -15,6 +15,13 @@ type ListProps = {
 
 function List({ canvas, setCanvas, canvasKey }: ListProps) {
 
+	const createListItem = () => {
+		const newList = [...canvas[canvasKey]];
+		newList.push(newListItemDefaultValue);
+
+		setCanvas({ ...canvas, [canvasKey]: newList });
+	};
+
 	const updateListItem = (i: number, newValue: string) => {
 		const newList = [...canvas[canvasKey]];
 		newList[i] = newValue;
@@ -22,9 +29,11 @@ function List({ canvas, setCanvas, canvasKey }: ListProps) {
 		setCanvas({ ...canvas, [canvasKey]: newList });
 	};
 
-	const createListItem = () => {
-		const newList = [...canvas[canvasKey]];
-		newList.push(newListItemDefaultValue);
+	const deleteListItem = (i: number) => {
+		const newList = [
+			...canvas[canvasKey].slice(0, i),
+			...canvas[canvasKey].slice(i + 1),
+		]
 
 		setCanvas({ ...canvas, [canvasKey]: newList });
 	};
@@ -47,13 +56,16 @@ function List({ canvas, setCanvas, canvasKey }: ListProps) {
 				</DialogHeader>
 				<ul className='flex flex-col gap-2'>
 					{canvas[canvasKey].map((el, i) => (
-						<li key={`${canvasKey}-${i}`}>
+						<li className='flex gap-2' key={`${canvasKey}-${i}`}>
 							<Input type='text' value={el} onChange={(e) => updateListItem(i, e.target.value)} />
+							<Button variant="ghost" onClick={() => deleteListItem(i)}>
+								<TrashIcon />
+							</Button>
 						</li>
 					))}
-					<li className='flex justify-end'>
-						<Button onClick={createListItem}>
-							<PlusIcon />
+					<li className='flex justify-center'>
+						<Button variant="ghost" onClick={createListItem}>
+							<PlusIcon /> Add Item
 						</Button>
 					</li>
 				</ul>
