@@ -1,21 +1,10 @@
 'use client'
 
-import { useState } from "react";
-import { Canvas } from "./types";
 import List from "./List";
+import { useLocalStorage } from "./useLocalStorage";
 
 export default function App() {
-  const [canvas, setCanvas] = useState<Canvas>({
-    keyPartners: ['Apple', 'IBM', 'Siemens', 'Oracle'],
-    keyActivities: ['Tesla', 'SpaceX', 'Boeing', 'Lockheed Martin'],
-    keyResources: ['Intel', 'Samsung', 'TSMC', 'Micron'],
-    valuePropositions: ['Netflix', 'Spotify', 'Disney', 'HBO'],
-    customerRelationships: ['Amazon', 'eBay', 'Shopify', 'Walmart'],
-    channels: ['FedEx', 'UPS', 'DHL', 'Maersk'],
-    customerSegments: ['Google', 'Facebook', 'Twitter', 'Snapchat'],
-    costStructure: ['Chevron', 'ExxonMobil', 'BP', 'TotalEnergies'],
-    revenueStreams: ['Visa', 'Mastercard', 'PayPal', 'Stripe'],
-  })
+  const [canvas, setCanvas] = useLocalStorage();
 
   return (
     <>

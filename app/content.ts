@@ -11,3 +11,5 @@ export const listTitles = {
   };
 
 export const newListItemDefaultValue = '...';
+
+export const createListItemButtonText = 'Add Item';
