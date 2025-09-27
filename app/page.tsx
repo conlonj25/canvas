@@ -22,37 +22,37 @@ export default function App() {
       <div className='flex flex-col gap-2 p-2'>
         <div className='flex flex-row gap-2'>
           <div className='flex flex-col flex-1'>
-            <List canvas={canvas} canvasKey='keyPartners' />
+            <List canvas={canvas} setCanvas={setCanvas} canvasKey='keyPartners' />
           </div>
           <div className='flex flex-col flex-1 gap-2'>
             <div className='flex-1'>
-              <List canvas={canvas} canvasKey='keyActivities' />
+              <List canvas={canvas} setCanvas={setCanvas} canvasKey='keyActivities' />
             </div>
             <div className='flex-1'>
-              <List canvas={canvas} canvasKey='keyResources' />
+              <List canvas={canvas} setCanvas={setCanvas} canvasKey='keyResources' />
             </div>
           </div>
           <div className='flex flex-col flex-1'>
-            <List canvas={canvas} canvasKey='valuePropositions' />
+            <List canvas={canvas} setCanvas={setCanvas} canvasKey='valuePropositions' />
           </div>
           <div className='flex flex-col flex-1 gap-2'>
             <div className='flex-1'>
-              <List canvas={canvas} canvasKey='customerRelationships' />
+              <List canvas={canvas} setCanvas={setCanvas} canvasKey='customerRelationships' />
             </div>
             <div className='flex-1'>
-              <List canvas={canvas} canvasKey='channels' />
+              <List canvas={canvas} setCanvas={setCanvas} canvasKey='channels' />
             </div>
           </div>
           <div className='flex flex-col flex-1'>
-            <List canvas={canvas} canvasKey='customerSegments' />
+            <List canvas={canvas} setCanvas={setCanvas} canvasKey='customerSegments' />
           </div>
         </div>
         <div className='flex gap-2'>
           <div className='flex-1'>
-            <List canvas={canvas} canvasKey='costStructure' />
+            <List canvas={canvas} setCanvas={setCanvas} canvasKey='costStructure' />
           </div>
           <div className='flex-1'>
-            <List canvas={canvas} canvasKey='revenueStreams' />
+            <List canvas={canvas} setCanvas={setCanvas} canvasKey='revenueStreams' />
           </div>
         </div>
       </div>
