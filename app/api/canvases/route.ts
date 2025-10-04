@@ -12,7 +12,7 @@ const getCanvasesByUser = async (userId: string) => {
 	return canvases;
 };
 
-export const postCanvasByUser = async (userId: string, data: Canvas, name: string) => {
+const postCanvasByUser = async (userId: string, data: Canvas, name: string) => {
 	const [newCanvas] = await db
 		.insert(canvasesTable)
 		.values({ user_id: userId, name, data })
