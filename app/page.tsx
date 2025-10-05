@@ -46,7 +46,7 @@ export default function App() {
           </div>
         </div>
       </div>
-      <h1 className='text-6xl text-center'>REWRITE SIDEBAR TO USE REACT QUERY</h1>
+      <h1 className='text-6xl text-center'>ADD A DELETE FUNCTION TO SIDEBAR</h1>
     </>
   )
 }

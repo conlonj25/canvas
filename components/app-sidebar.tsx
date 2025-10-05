@@ -13,7 +13,7 @@ import {
 	useQuery,
 	useQueryClient,
 } from '@tanstack/react-query';
-import { PlusIcon } from "lucide-react";
+import { PlusIcon, TrashIcon } from "lucide-react";
 
 export function AppSidebar() {
 	const queryClient = useQueryClient();
@@ -23,8 +23,13 @@ export function AppSidebar() {
 		queryFn: async () => (await fetch("/api/canvases", { method: "GET" })).json(),
 	});
 
-	const { mutate, isPending } = useMutation({
+	const postMutation = useMutation({
 		mutationFn: async () => (await fetch("/api/canvases", { method: "POST" })).json(),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: ['canvases'] }),
+	});
+
+	const deleteMutation = useMutation({
+		mutationFn: async (id: number) => (await fetch(`/api/canvases/${id}`, { method: "DELETE" })).json(),
 		onSuccess: () => queryClient.invalidateQueries({ queryKey: ['canvases'] }),
 	});
 
@@ -47,13 +52,18 @@ export function AppSidebar() {
 
 			<SidebarContent>
 				{data?.map((canvas, i) => (
-					<Button key={canvas.id} variant="ghost" className="w-full justify-start">
-						{canvas.name}
-					</Button>
+					<div key={canvas.id} className="flex">
+						<Button variant="ghost" className="flex-8">
+							{canvas.name}
+						</Button>
+						<Button variant="ghost" className="flex-2" disabled={isLoading || postMutation.isPending || deleteMutation.isPending} onClick={() => deleteMutation.mutate(canvas.id)}>
+							<TrashIcon />
+						</Button>
+					</div>
 				))}
 				<div className="flex justify-center mt-4">
-					<Button className="w-50%" disabled={isLoading || isPending} onClick={() => mutate()}>
-						{isLoading || isPending && <Spinner />}
+					<Button disabled={isLoading || postMutation.isPending || deleteMutation.isPending} onClick={() => postMutation.mutate()}>
+						{isLoading || postMutation.isPending && <Spinner />}
 						<PlusIcon />
 						New Canvas
 					</Button>
