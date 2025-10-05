@@ -1,5 +1,7 @@
 export const localStorageCanvasKey = 'canvas';
 
+export const newCanvasInitialName = 'My Canvas';
+
 export const defaultInitialCanvas = {
 	keyPartners: ['Apple', 'IBM', 'Siemens', 'Oracle'],
 	keyActivities: ['Tesla', 'SpaceX', 'Boeing', 'Lockheed Martin'],

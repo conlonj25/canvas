@@ -45,6 +45,8 @@ export default function App() {
           </div>
         </div>
       </div>
+      <h1 className='text-6xl text-center'>REWRITE GET TO RETURN ACTUAL ROWS INSTEAD OF JUST A CANVAS</h1>
+      <h1 className='text-6xl text-center'>USE REACT QUERY</h1>
     </>
   )
 }

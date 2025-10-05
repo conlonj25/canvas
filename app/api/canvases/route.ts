@@ -3,6 +3,8 @@ import { NextRequest } from 'next/server';
 import { eq } from 'drizzle-orm';
 import { Canvas, CanvasSchema } from '@/app/types';
 import { drizzle } from 'drizzle-orm/neon-http';
+import { auth } from '@clerk/nextjs/server';
+import { emptyInitialCanvas, newCanvasInitialName } from '@/app/values';
 
 const db = drizzle(process.env.DATABASE_URL!, { schema: { canvasesTable } });
 const JAMES_BOND_USER_ID = 'user_33Kj30Z0380VFRM8uFnAbs4gxRA';
@@ -23,7 +25,13 @@ const postCanvasByUser = async (userId: string, data: Canvas, name: string) => {
 
 // GET    /canvases        # list canvases for the current user
 export async function GET(request: NextRequest) {
-	const userCanvases = await getCanvasesByUser(JAMES_BOND_USER_ID);
+	const { userId } = await auth();
+
+	if (!userId) {
+		return new Response("Unauthorized", { status: 401 });
+	}
+
+	const userCanvases = await getCanvasesByUser(userId);
 
 	return new Response(
 		JSON.stringify(userCanvases)
@@ -32,14 +40,12 @@ export async function GET(request: NextRequest) {
 
 // POST   /canvases        # create a new canvas for the current user
 export async function POST(request: NextRequest) {
-	const body = await request.json();
-	const { data, success } = CanvasSchema.safeParse(body.data);
-	console.log({ data, success })
+	const { userId } = await auth();
 
-	if (success) {
-		const result = await postCanvasByUser(JAMES_BOND_USER_ID, data, 'new name');
-		return new Response(JSON.stringify(result));
-	} else {
-		return new Response(JSON.stringify({ error: "The data passed is invalid as a canvas" }), { status: 500 });
+	if (!userId) {
+		return new Response("Unauthorized", { status: 401 });
 	}
+
+	const result = await postCanvasByUser(userId, emptyInitialCanvas, newCanvasInitialName);
+	return new Response(JSON.stringify(result));
 }
