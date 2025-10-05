@@ -1,14 +1,15 @@
 'use client'
 
-import { Canvas } from "@/app/types";
 import { Sidebar, SidebarContent, SidebarHeader } from "@/components/ui/sidebar"
 import { SignedOut, SignInButton, SignUpButton, SignedIn, UserButton } from "@clerk/nextjs"
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { Spinner } from "./ui/spinner";
+import { InferSelectModel } from "drizzle-orm";
+import { canvasesTable } from "@/db/schema";
 
 export function AppSidebar() {
-	const [canvases, setCanvases] = useState<Canvas[]>([]);
+	const [canvases, setCanvases] = useState<InferSelectModel<typeof canvasesTable>[]>([]);
 	const [creatingNewCanvas, setCreatingNewCanvas] = useState(false);
 
 	useEffect(() => {
@@ -43,8 +44,8 @@ export function AppSidebar() {
 
 			<SidebarContent>
 				{canvases.map((canvas, i) => (
-					<Button key={i} variant="ghost" className="w-full justify-start">
-						{`Canvas ${i}`}
+					<Button key={canvas.id} variant="ghost" className="w-full justify-start">
+						{canvas.name}
 					</Button>
 				))}
 				<Button variant="outline" className="w-full justify-start" disabled={creatingNewCanvas} onClick={createNewCanvas}>

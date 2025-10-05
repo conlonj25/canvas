@@ -1,10 +1,11 @@
 'use client'
 
+import { useState } from "react";
 import List from "./List";
-import { useLocalStorage } from "./useLocalStorage";
+import { defaultInitialCanvas } from "./values";
 
 export default function App() {
-  const [canvas, setCanvas] = useLocalStorage();
+  const [canvas, setCanvas] = useState(defaultInitialCanvas);
 
   return (
     <>
@@ -45,8 +46,7 @@ export default function App() {
           </div>
         </div>
       </div>
-      <h1 className='text-6xl text-center'>REWRITE GET TO RETURN ACTUAL ROWS INSTEAD OF JUST A CANVAS</h1>
-      <h1 className='text-6xl text-center'>USE REACT QUERY</h1>
+      <h1 className='text-6xl text-center'>REWRITE SIDEBAR TO USE REACT QUERY</h1>
     </>
   )
 }

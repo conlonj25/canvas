@@ -1,19 +1,19 @@
 'use client'
 
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { emptyInitialCanvas, localStorageCanvasKey, defaultInitialCanvas } from "./values";
-import { Canvas, CanvasSchema } from "./types";
+import { canvasDataInitialValue, localStorageCanvasKey, defaultInitialCanvas } from "./values";
+import { Canvas, CanvasDataSchema } from "@/db/schema";
 
-export type UseLocalStorageReturnType = [canvas: Canvas, setCanvasToLocalStorage: Dispatch<SetStateAction<Canvas>>];
+export type UseLocalStorageReturnType = [canvas: Canvas, setCanvasToLocalStorage: Dispatch<SetStateAction<Canvas['data']>>];
 
 export const useLocalStorage = (): UseLocalStorageReturnType => {
-	const [canvas, setCanvas] = useState<Canvas>(emptyInitialCanvas);
+	const [canvas, setCanvas] = useState<Canvas['data']>(canvasDataInitialValue);
 
 	useEffect(() => {
 		try {
 			const data = localStorage.getItem(localStorageCanvasKey) ?? '{}';
 			const obj = JSON.parse(data);
-			const result = CanvasSchema.parse(obj);
+			const result = CanvasDataSchema.parse(obj);
 			setCanvas(result);
 		} catch {
 			setCanvas(defaultInitialCanvas);

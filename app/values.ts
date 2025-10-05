@@ -1,6 +1,6 @@
 export const localStorageCanvasKey = 'canvas';
 
-export const newCanvasInitialName = 'My Canvas';
+export const canvasNameInitialValue = 'My Canvas';
 
 export const defaultInitialCanvas = {
 	keyPartners: ['Apple', 'IBM', 'Siemens', 'Oracle'],
@@ -14,7 +14,7 @@ export const defaultInitialCanvas = {
 	revenueStreams: ['Visa', 'Mastercard', 'PayPal', 'Stripe'],
 }
 
-export const emptyInitialCanvas = {
+export const canvasDataInitialValue = {
 	keyPartners: [],
 	keyActivities: [],
 	keyResources: [],
