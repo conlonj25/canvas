@@ -2,37 +2,22 @@
 
 import { Sidebar, SidebarContent, SidebarHeader } from "@/components/ui/sidebar"
 import { SignedOut, SignInButton, SignUpButton, SignedIn, UserButton } from "@clerk/nextjs"
-import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { Spinner } from "./ui/spinner";
-import { InferSelectModel } from "drizzle-orm";
-import { Canvas, canvasesTable } from "@/db/schema";
-
-import {
-	useMutation,
-	useQuery,
-	useQueryClient,
-} from '@tanstack/react-query';
+import { Canvas } from "@/db/schema";
+import { UseMutationResult } from '@tanstack/react-query';
 import { PlusIcon, TrashIcon } from "lucide-react";
+import { Dispatch, SetStateAction } from "react";
 
-export function AppSidebar() {
-	const queryClient = useQueryClient();
+type AppSidebarProps = {
+	data: Canvas[] | undefined;
+	isLoading: boolean;
+	postMutation: UseMutationResult<any, Error, void, unknown>;
+	deleteMutation: UseMutationResult<any, Error, number, unknown>;
+	setCurrentlySelectedCanvasIndex: Dispatch<SetStateAction<number>>;
+}
 
-	const { data, isLoading } = useQuery<Canvas[]>({
-		queryKey: ['canvases'],
-		queryFn: async () => (await fetch("/api/canvases", { method: "GET" })).json(),
-	});
-
-	const postMutation = useMutation({
-		mutationFn: async () => (await fetch("/api/canvases", { method: "POST" })).json(),
-		onSuccess: () => queryClient.invalidateQueries({ queryKey: ['canvases'] }),
-	});
-
-	const deleteMutation = useMutation({
-		mutationFn: async (id: number) => (await fetch(`/api/canvases/${id}`, { method: "DELETE" })).json(),
-		onSuccess: () => queryClient.invalidateQueries({ queryKey: ['canvases'] }),
-	});
-
+export function AppSidebar({ data, isLoading, postMutation, deleteMutation, setCurrentlySelectedCanvasIndex }: AppSidebarProps) {
 	return (
 
 		<Sidebar>
@@ -53,7 +38,7 @@ export function AppSidebar() {
 			<SidebarContent>
 				{data?.map((canvas, i) => (
 					<div key={canvas.id} className="flex">
-						<Button variant="ghost" className="flex-8">
+						<Button variant="ghost" className="flex-8" onClick={() => setCurrentlySelectedCanvasIndex(i)}>
 							{canvas.name}
 						</Button>
 						<Button variant="ghost" className="flex-2" disabled={isLoading || postMutation.isPending || deleteMutation.isPending} onClick={() => deleteMutation.mutate(canvas.id)}>

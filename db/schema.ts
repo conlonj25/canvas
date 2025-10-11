@@ -2,15 +2,7 @@ import { InferSelectModel } from "drizzle-orm";
 import { integer, pgTable, text, jsonb, timestamp } from "drizzle-orm/pg-core";
 import { z } from "zod";
 
-export const canvasesTable = pgTable("canvases", {
-	id: integer().primaryKey().generatedAlwaysAsIdentity(),
-	user_id: text().notNull(),
-	name: text().notNull(),
-	data: jsonb().notNull(),
-	created_at: timestamp({ mode: "date" }).notNull().defaultNow(),
-	updated_at: timestamp({ mode: "date" }).notNull().defaultNow(),
-});
-
+// Zod schema for validating the structure of the JSONB data
 export const CanvasDataSchema = z.object({
 	keyPartners: z.array(z.string()),
 	keyActivities: z.array(z.string()),
@@ -21,6 +13,18 @@ export const CanvasDataSchema = z.object({
 	customerSegments: z.array(z.string()),
 	costStructure: z.array(z.string()),
 	revenueStreams: z.array(z.string()),
+});
+
+export type CanvasData = z.infer<typeof CanvasDataSchema>;
+
+// Drizzle ORM table definition
+export const canvasesTable = pgTable("canvases", {
+	id: integer().primaryKey().generatedAlwaysAsIdentity(),
+	user_id: text().notNull(),
+	name: text().notNull(),
+	data: jsonb().$type<CanvasData>().notNull(),
+	created_at: timestamp({ mode: "date" }).notNull().defaultNow(),
+	updated_at: timestamp({ mode: "date" }).notNull().defaultNow(),
 });
 
 export type Canvas = InferSelectModel<typeof canvasesTable>;

@@ -10,7 +10,8 @@ const selectCanvasesByUser = async (userId: string): Promise<Canvas[]> => {
 	return await db
 		.select()
 		.from(canvasesTable)
-		.where(eq(canvasesTable.user_id, userId));
+		.where(eq(canvasesTable.user_id, userId))
+		.orderBy(canvasesTable.created_at);
 };
 
 const insertCanvasByUser = async (userId: string): Promise<Canvas> => {

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
+
 import "./globals.css";
 import { QueryClient } from "@tanstack/react-query";
 import { ClientProviders } from "./ClientProviders";
@@ -32,11 +31,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ClientProviders>
-          <AppSidebar />
-          <SidebarTrigger />
-          <main className="flex-1">
-            {children}
-          </main>
+          {children}
         </ClientProviders>
       </body>
     </html>
